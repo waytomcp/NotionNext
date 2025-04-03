@@ -59,16 +59,16 @@ const LayoutBase = props => {
 
   const headerSlot = (
     <header>
-      {/* 顶部导航 */}
-      <Header {...props} />
 
       {/* 通知横幅 */}
       {router.route === '/' ? (
         <>
           <NoticeBar />
+                {/* 顶部导航 */}
+         <Header {...props} />
           <Hero {...props} />
         </>
-      ) : null}
+      ) : <Header {...props} />}
       {fullWidth ? null : <PostHeader {...props} isDarkMode={isDarkMode} />}
     </header>
   )
@@ -112,13 +112,12 @@ const LayoutBase = props => {
             {slotTop}
             {children}
           </div>
-
+  {/*
           <div className='lg:px-2'></div>
-
+           主区快右侧  
           <div className='hidden xl:block'>
-            {/* 主区快右侧 */}
             {slotRight}
-          </div>
+          </div>  */}
         </div>
       </main>
 

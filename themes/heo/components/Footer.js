@@ -41,7 +41,6 @@ const Footer = () => {
             {BIO && <span className='mx-1'> | {BIO}</span>}
           </div>
         </div>
-
         <div id='footer-bottom-right'>
           {BEI_AN && (
             <>
