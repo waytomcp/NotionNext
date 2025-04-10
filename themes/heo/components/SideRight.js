@@ -44,12 +44,12 @@ export default function SideRight(props) {
           </Card>
         )}
 
-        {/* 联系交流群 */}
+        {/* 联系交流群 
         <div className='wow fadeInUp'>
           <TouchMeCard />
-        </div>
+        </div> /}
 
-        {/* 最新文章列表 */}
+        {/* 最新文章列表 
         <div
           className={
             'border wow fadeInUp  hover:border-indigo-600  dark:hover:border-yellow-600 duration-200 dark:border-gray-700 dark:bg-[#1e1e1e] dark:text-white rounded-xl lg:p-6 p-4 hidden lg:block bg-white'
@@ -60,7 +60,7 @@ export default function SideRight(props) {
         {rightAreaSlot}
 
         <FaceBookPage />
-        <Live2D />
+        <Live2D /> */}
 
         {/* 标签和成绩 */}
         <Card
