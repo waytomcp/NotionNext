@@ -34,13 +34,15 @@ export default function SideRight(props) {
 
   return (
     <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full'>
-      <InfoCard {...props} className='w-72 wow fadeInUp' />
+      {/* <InfoCard {...props} className='w-72 wow fadeInUp' /> */}
 
       <div className='sticky top-20 space-y-4'>
         {/* 文章页显示目录 */}
         {post && post.toc && post.toc.length > 0 && (
           <Card className='bg-white dark:bg-[#1e1e1e] wow fadeInUp'>
-            <Catalog toc={post.toc} />
+            <div style={{ maxHeight: 'calc(-172px + 100vh)', overflowY: 'auto', paddingRight: '8px' }}>
+              <Catalog toc={post.toc} />
+            </div>
           </Card>
         )}
 

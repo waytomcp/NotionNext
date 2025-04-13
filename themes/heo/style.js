@@ -7,6 +7,11 @@
 const Style = () => {
   return (
     <style jsx global>{`
+      html {
+        transform: scale(0.75);
+        transform-origin: top center;
+      }
+
       body {
         background-color: #f7f9fe;
       }
