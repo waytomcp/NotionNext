@@ -30,14 +30,17 @@ const ClerkProvider = dynamic(() =>
  * @returns
  */
 const MyApp = ({ Component, pageProps }) => {
+  const defaultTheme = "mheo";
+  console.log(Component);
+  const newProps = {...pageProps};
+  newProps.NOTION_CONFIG.THEME = defaultTheme;
   // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
   useAdjustStyle()
-
   const route = useRouter()
   const theme = useMemo(() => {
     return (
       getQueryParam(route.asPath, 'theme') ||
-      pageProps?.NOTION_CONFIG?.THEME ||
+       newProps?.NOTION_CONFIG?.THEME ||
       BLOG.THEME
     )
   }, [route])
@@ -53,12 +56,12 @@ const MyApp = ({ Component, pageProps }) => {
 
   const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
   const content = (
-    <GlobalContextProvider {...pageProps}>
-      <GLayout {...pageProps}>
-        <SEO {...pageProps} />
-        <Component {...pageProps} />
+    <GlobalContextProvider {...newProps}>
+      <GLayout {...newProps}>
+        <SEO {...newProps} />
+        <Component {...newProps} />
       </GLayout>
-      <ExternalPlugins {...pageProps} />
+      <ExternalPlugins {...newProps} />
     </GlobalContextProvider>
   )
   return (

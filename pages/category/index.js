@@ -9,7 +9,9 @@ import { DynamicLayout } from '@/themes/theme'
  * @returns
  */
 export default function Category(props) {
+  debugger;
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  console.log(theme);
   return (
     <DynamicLayout theme={theme} layoutName='LayoutCategoryIndex' {...props} />
   )
@@ -17,6 +19,8 @@ export default function Category(props) {
 
 export async function getStaticProps({ locale }) {
   const props = await getGlobalData({ from: 'category-index-props', locale })
+  // props.NOTION_CONFIG.THEME = 'mheo';
+  console.log(props.NOTION_CONFIG.THEME);
   delete props.allPages
   return {
     props,

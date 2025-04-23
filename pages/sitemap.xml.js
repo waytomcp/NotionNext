@@ -18,6 +18,7 @@ export const getServerSideProps = async ctx => {
       pageId: id,
       from: 'sitemap.xml'
     })
+    console.log('sitemap.xml', siteData);
     const link = siteConfig(
       'LINK',
       siteData?.siteInfo?.link,

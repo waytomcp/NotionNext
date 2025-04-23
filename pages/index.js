@@ -13,7 +13,9 @@ import { generateRedirectJson } from '@/lib/redirect'
  * @returns
  */
 const Index = props => {
+  // const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  console.log(theme);
   return <DynamicLayout theme={theme} layoutName='LayoutIndex' {...props} />
 }
 
@@ -25,6 +27,7 @@ export async function getStaticProps(req) {
   const { locale } = req
   const from = 'index'
   const props = await getGlobalData({ from, locale })
+  // props.NOTION_CONFIG.THEME = 'mheo';
   const POST_PREVIEW_LINES = siteConfig(
     'POST_PREVIEW_LINES',
     12,
