@@ -77,7 +77,8 @@ const LayoutBase = props => {
   const slotRight =
     router.route === '/404' || fullWidth ? null : <SideRight {...props} />
 
-  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
+  // const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
+  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-96rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
 
   const HEO_HERO_BODY_REVERSE = siteConfig(
     'HEO_HERO_BODY_REVERSE',
@@ -93,8 +94,8 @@ const LayoutBase = props => {
 
   return (
     <div
-      id='theme-heo'
-      className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
+      id='theme-mheo'
+      className={`${siteConfig('FONT_STYLE')} bg-gray-50 dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
       <Style />
 
       {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
@@ -137,7 +138,7 @@ const LayoutBase = props => {
  */
 const LayoutIndex = props => {
   return (
-    <div id='post-outer-wrapper' className='px-5 md:px-0'>
+    <div id='post-outer-wrapper' className='category-container px-5 md:px-0'>
       {/* 文章分类条 */}
       <CategoryBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
@@ -156,7 +157,7 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   return (
-    <div id='post-outer-wrapper' className='px-5  md:px-0'>
+    <div id='post-outer-wrapper' className='category-container md:w-64 mb-8 md:mb-0 md:mr-8'>
       {/* 文章分类条 */}
       <CategoryBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
@@ -195,7 +196,7 @@ const LayoutSearch = props => {
   }, [])
   return (
     <div currentSearch={currentSearch}>
-      <div id='post-outer-wrapper' className='px-5  md:px-0'>
+      <div id='post-outer-wrapper' className='category-container px-5  md:px-0'>
         {!currentSearch ? (
           <SearchNav {...props} />
         ) : (
