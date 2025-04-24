@@ -116,9 +116,9 @@ const LayoutBase = props => {
  
           <div className='lg:px-2'></div>
           {/* 主区快右侧   */}
-          {/* <div className='hidden xl:block'>
+          <div className='hidden xl:block'>
             {slotRight}
-          </div>   */}
+          </div>  
         </div>
       </main>
 
