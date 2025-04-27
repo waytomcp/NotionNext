@@ -39,6 +39,18 @@ module.exports = {
           'black-gray': '#101414',
           'light-gray': '#e5e5e5'
         },
+        brown: {
+          50:  '#efebe9',
+          100: '#d7ccc8',
+          200: '#bcaaa4',
+          300: '#a1887f',
+          400: '#8d6e63',
+          500: '#795548', // 标准 brown
+          600: '#6d4c41',
+          700: '#5d4037',
+          800: '#4e342e',
+          900: '#3e2723',
+        },
         // black: '#212b36',
         'dark-700': '#090e34b3',
         dark: {
@@ -80,6 +92,16 @@ module.exports = {
       }
     }
   },
+  safelist: [
+    "bg-orange-100","text-orange-800",
+    "bg-red-100","text-red-800",
+    "bg-green-100","text-green-800",
+    "bg-purple-100","text-purple-800",
+    "bg-blue-100","text-blue-800",
+    "bg-yellow-100","text-yellow-800",
+    "bg-brown-100","text-brown-800",
+    "bg-pink-100","text-pink-800",
+  ],
   variants: {
     extend: {}
   },
