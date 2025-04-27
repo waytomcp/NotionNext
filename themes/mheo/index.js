@@ -95,7 +95,8 @@ const LayoutBase = props => {
   return (
     <div
       id='theme-mheo'
-      className={`${siteConfig('FONT_STYLE')} bg-gray-50 dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
+      // className={`${siteConfig('FONT_STYLE')} bg-gray-50 dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
+      className={`bg-gray-50 dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
       <Style />
 
       {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
@@ -157,7 +158,7 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   return (
-    <div id='post-outer-wrapper' className='category-container md:w-64 mb-8 md:mb-0 md:mr-8'>
+    <div id='post-outer-wrapper' className='category-container px-5 md:px-0 w-full'>
       {/* 文章分类条 */}
       <CategoryBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (

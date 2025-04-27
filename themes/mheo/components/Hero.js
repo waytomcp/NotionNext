@@ -175,7 +175,8 @@ function GroupMenu() {
   const title_3 = siteConfig('HEO_HERO_CATEGORY_3', {}, CONFIG)?.title || ''
 
   return (
-    <div className='h-[165px] select-none xl:h-20 flex flex-col justify-between xl:space-y-0 xl:flex-row w-28 lg:w-48 xl:w-full xl:flex-nowrap xl:space-x-3'>
+    title_1 || title_2 || title_3 ?
+      <div className='h-[165px] select-none xl:h-20 flex flex-col justify-between xl:space-y-0 xl:flex-row w-28 lg:w-48 xl:w-full xl:flex-nowrap xl:space-x-3'>
       <Link
         href={url_1}
         className='group relative overflow-hidden bg-gradient-to-r from-blue-500 to-blue-400 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
@@ -210,7 +211,8 @@ function GroupMenu() {
           <i className='fa-solid fa-book-bookmark text-4xl '></i>
         </div>
       </Link>
-    </div>
+      </div>
+    : null
   )
 }
 

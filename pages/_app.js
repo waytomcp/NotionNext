@@ -33,7 +33,9 @@ const MyApp = ({ Component, pageProps }) => {
   const defaultTheme = "mheo";
   console.log(Component);
   const newProps = {...pageProps};
-  newProps.NOTION_CONFIG.THEME = defaultTheme;
+  if (newProps.NOTION_CONFIG) {
+    newProps.NOTION_CONFIG.THEME = defaultTheme;
+  }
   // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
   useAdjustStyle()
   const route = useRouter()

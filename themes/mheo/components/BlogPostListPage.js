@@ -26,7 +26,8 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
       <div id='container' className='article-container'>
         {/* 文章列表 */}
         <div
-          className={`${POST_TWO_COLS && '2xl:grid 2xl:grid-cols-3'} grid-cols-3 grid gap-4`}>
+          // className={`${POST_TWO_COLS && '2xl:grid 2xl:grid-cols-3'} grid-cols-3 grid gap-4`}>
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch`}>
           {posts?.map(post => (
             <BlogPostCard
               index={posts.indexOf(post)}
