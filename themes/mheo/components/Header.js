@@ -42,10 +42,10 @@ const Header = props => {
         setTextWhite(false)
 
         // 文章详情页特殊处理
-        if (document?.querySelector('#post-bg')) {
-          setFixedNav(true)
-          setTextWhite(true)
-        }
+        // if (document?.querySelector('#post-bg')) {
+        //   setFixedNav(true)
+        //   setTextWhite(true)
+        // }
       } else {
         // 向下滚动后的导航样式
         setFixedNav(true)
@@ -140,7 +140,7 @@ const Header = props => {
       {/* 顶部导航菜单栏 */}
       <nav
         id='nav'
-        className={`z-20 h-16 top-0 w-full duration-300 transition-all
+        className={`z-20 h-16 top-0 w-full duration-300 transition-all shadow
             ${fixedNav ? 'fixed' : 'relative bg-transparent'} 
             ${textWhite ? 'text-white ' : 'text-black dark:text-white'}  
             ${navBgWhite ? 'bg-white dark:bg-[#18171d] shadow' : 'bg-transparent'}`}>

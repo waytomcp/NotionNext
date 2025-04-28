@@ -39,7 +39,8 @@ import PostHeader from './components/PostHeader'
 import { PostLock } from './components/PostLock'
 import PostRecommend from './components/PostRecommend'
 import SearchNav from './components/SearchNav'
-import SideRight from './components/SideRight'
+import SideLeft from './components/SideLeft'
+// import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
@@ -74,8 +75,8 @@ const LayoutBase = props => {
   )
 
   // 右侧栏 用户信息+标签列表
-  const slotRight =
-    router.route === '/404' || fullWidth ? null : <SideRight {...props} />
+  const isStartWithArticle = router.route.startsWith('/[prefix]');
+  const slotRight = !isStartWithArticle || fullWidth ? null : <SideLeft {...props} />
 
   // const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
   const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-96rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
@@ -105,21 +106,20 @@ const LayoutBase = props => {
       {/* 主区块 */}
       <main
         id='wrapper-outer'
-        className={`flex-grow w-full ${maxWidth} mx-auto relative md:px-5`}>
+        className={`flex-grow w-[80%] ${maxWidth} mx-auto relative mx-[10%]`}>
         <div
           id='container-inner'
-          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} w-full mx-auto lg:flex justify-center relative z-10`}>
+          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} mx-auto lg:flex justify-center relative mx-10 z-10`}>
+          <div className='hidden xl:block'>
+            {slotRight}
+          </div>  
+          <div className='lg:px-2'></div>
           <div className={`w-full h-auto ${className || ''}`}>
             {/* 主区上部嵌入 */}
             {slotTop}
             {children}
           </div>
- 
-          <div className='lg:px-2'></div>
-          {/* 主区快右侧   */}
-          <div className='hidden xl:block'>
-            {slotRight}
-          </div>  
+         
         </div>
       </main>
 

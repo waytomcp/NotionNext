@@ -62,7 +62,11 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
           <div className="border-b pb-4">
             <div className="flex justify-between items-start mb-3">
               <div className="flex items-center">
-                <h4 className="text-blue-600 font-medium mr-2">{post.title}</h4>
+                <Link
+                  href={post?.href}
+                  passHref>
+                  <h4 className="text-blue-600 font-medium mr-2">{post.title}</h4>
+                </Link>
                 <div className="flex gap-2">
                   {
                     post?.bizTags?.map((tag, index) => {
