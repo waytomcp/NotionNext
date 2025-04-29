@@ -106,10 +106,10 @@ const LayoutBase = props => {
       {/* 主区块 */}
       <main
         id='wrapper-outer'
-        className={`flex-grow w-[80%] ${maxWidth} mx-auto relative mx-[10%]`}>
+        className={`flex-grow w-[80%] ${maxWidth} relative max-w-7xl mx-auto`}>
         <div
           id='container-inner'
-          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} mx-auto lg:flex justify-center relative mx-10 z-10`}>
+          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} lg:flex justify-center relative mx-10 z-10`}>
           <div className='hidden xl:block'>
             {slotRight}
           </div>  
@@ -293,7 +293,7 @@ const LayoutSlug = props => {
   return (
     <>
       <div
-        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 `}>
+        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow rounded-lg lg:px-2 lg:py-4 shadow-sm `}>
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
