@@ -39,7 +39,7 @@ export default function SideLeft(props) {
       <div className='sticky top-20 space-y-4'>
         {/* 文章页显示目录 */}
         {post && post.toc && post.toc.length > 0 && (
-          <Card className='bg-white dark:bg-[#1e1e1e] wow fadeInUp'>
+          <Card className='bg-white dark:bg-[#1e1e1e] wow fadeInUp border-none shadow-sm rounded-lg'>
             <Catalog toc={post.toc} />
           </Card>
         )}
