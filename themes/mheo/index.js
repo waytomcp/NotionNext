@@ -106,7 +106,7 @@ const LayoutBase = props => {
       {/* 主区块 */}
       <main
         id='wrapper-outer'
-        className={`flex-grow ${maxWidth} relative max-w-7xl mx-auto`}>
+        className={`${router.route === '/' || router.route.indexOf('category') > -1 ? 'container' : ''} flex-grow ${maxWidth} relative ${router.route === '/' || router.route.indexOf('category') > -1 ? '' : 'max-w-7xl'} mx-auto`}>
         <div
           id='container-inner'
           className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} lg:flex justify-center relative mx-10 z-10 mt-4`}>
