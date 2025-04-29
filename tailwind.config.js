@@ -101,6 +101,7 @@ module.exports = {
     "bg-yellow-100","text-yellow-800",
     "bg-brown-100","text-brown-800",
     "bg-pink-100","text-pink-800",
+    "from-blue-50",
   ],
   variants: {
     extend: {}

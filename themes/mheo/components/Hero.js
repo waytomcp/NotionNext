@@ -17,18 +17,41 @@ import CONFIG from '../config'
  */
 const Hero = props => {
   const HEO_HERO_REVERSE = siteConfig('HEO_HERO_REVERSE', false, CONFIG)
+  const HEO_FULL_BANNER = siteConfig('HEO_FULL_BANNER', false, CONFIG)
+  const HEO_HERO_GROUP_SHOW_FLAG = siteConfig('HEO_HERO_GROUP_SHOW_FLAG', false, CONFIG)
+  console.log(HEO_FULL_BANNER);
   return (
     <div
       id='hero-wrapper'
-      className='recent-top-post-group w-full overflow-hidden select-none px-5 mb-4'>
+      className='recent-top-post-group w-full overflow-hidden select-none mb-4'>
       <div
         id='hero'
         style={{ zIndex: 1 }}
         className={`${HEO_HERO_REVERSE ? 'xl:flex-row-reverse' : ''}
-           recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative`}>
+           recent-post-top rounded-[12px] recent-top-post-group overflow-x-scroll w-full flex-row flex-nowrap flex relative`}>
         {/* 左侧banner组 */}
-        <BannerGroup {...props} />
-
+        { HEO_HERO_GROUP_SHOW_FLAG ? <BannerGroup {...props} /> : null }
+        { 
+          HEO_FULL_BANNER?.length ?
+          <div className={`bg-gradient-to-r from-${HEO_FULL_BANNER[0]?.bgColor || ''}-50 to-indigo-50 py-12 w-full`}>
+            <div className="container mx-auto px-4 text-center">
+              <h1 className="text-4xl font-bold mb-4 text-gray-800">{HEO_FULL_BANNER[0]?.title || ''}</h1>
+              <p className="text-xl max-w-3xl mx-auto text-gray-600">{HEO_FULL_BANNER[0]?.content || ''}</p>
+              <div className="flex justify-center space-x-6 mt-8">
+                {
+                  HEO_FULL_BANNER[0]?.icons?.map((item, index) => {
+                    return (
+                      <a key={index} href={item?.url || "#"} className="text-gray-600 hover:text-gray-800">
+                        <i className={`${item?.icon} text-2xl`} />
+                      </a>
+                    )
+                  })
+                }
+              </div>
+            </div>
+          </div>
+          : null
+        }
         {/* 中间留白 */}
         <div className='px-1.5 h-full'></div>
 
@@ -81,7 +104,10 @@ function Banner(props) {
       id='banners'
       onClick={handleClickBanner}
       className='hidden xl:flex xl:flex-col group h-full bg-white dark:bg-[#1e1e1e] rounded-xl border dark:border-gray-700 mb-3 relative overflow-hidden'>
-      <div
+      {
+        siteConfig('HEO_HERO_TITLE_1', null, CONFIG) || siteConfig('HEO_HERO_TITLE_2', null, CONFIG) || siteConfig('HEO_HERO_TITLE_3', null, CONFIG)
+        ?
+        <div
         id='banner-title'
         className='z-10 flex flex-col absolute top-10 left-10'>
         <div className='text-4xl font-bold mb-3  dark:text-white'>
@@ -92,25 +118,31 @@ function Banner(props) {
         <div className='text-xs text-gray-600  dark:text-gray-200'>
           {siteConfig('HEO_HERO_TITLE_3', null, CONFIG)}
         </div>
-      </div>
+        </div>
+        : null
+      }
+      
 
       {/* 斜向滚动的图标 */}
       <TagsGroupBar />
 
       {/* 遮罩 */}
-      <div
-        id='banner-cover'
-        style={{ backdropFilter: 'blur(15px)' }}
-        className={
-          'z-20 rounded-xl overflow-hidden opacity-0 group-hover:opacity-100 duration-300 transition-all bg-[#4259efdd] dark:bg-[#dca846] dark:text-white cursor-pointer absolute w-full h-full top-0 flex justify-start items-center'
-        }>
-        <div className='ml-12 -translate-x-32 group-hover:translate-x-0 duration-300 transition-all ease-in'>
-          <div className='text-7xl text-white font-extrabold'>{coverTitle}</div>
-          <div className='-ml-3 text-gray-300'>
-            <ArrowSmallRight className={'w-24 h-24 stroke-2'} />
+      {
+      coverTitle ?
+        <div
+          id='banner-cover'
+          style={{ backdropFilter: 'blur(15px)' }}
+          className={
+            'z-20 rounded-xl overflow-hidden opacity-0 group-hover:opacity-100 duration-300 transition-all bg-[#4259efdd] dark:bg-[#dca846] dark:text-white cursor-pointer absolute w-full h-full top-0 flex justify-start items-center'
+          }>
+          <div className='ml-12 -translate-x-32 group-hover:translate-x-0 duration-300 transition-all ease-in'>
+            <div className='text-7xl text-white font-extrabold'>{coverTitle}</div>
+            <div className='-ml-3 text-gray-300'>
+              <ArrowSmallRight className={'w-24 h-24 stroke-2'} />
+            </div>
           </div>
         </div>
-      </div>
+      :null }
     </div>
   )
 }
@@ -125,40 +157,42 @@ function TagsGroupBar() {
     groupIcons = groupIcons.concat(groupIcons)
   }
   return (
-    <div className='tags-group-all flex -rotate-[30deg] h-full'>
-      <div className='tags-group-wrapper flex flex-nowrap absolute top-16'>
-        {groupIcons?.map((g, index) => {
-          return (
-            <div key={index} className='tags-group-icon-pair ml-6 select-none'>
-              <div
-                style={{ background: g.color_1 }}
-                className={
-                  'tags-group-icon w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'
-                }>
-                <LazyImage
-                  priority={true}
-                  src={g.img_1}
-                  title={g.title_1}
-                  className='w-2/3 hidden xl:block'
-                />
+    groupIcons.length ?
+      <div className='tags-group-all flex -rotate-[30deg] h-full'>
+        <div className='tags-group-wrapper flex flex-nowrap absolute top-16'>
+          {groupIcons?.map((g, index) => {
+            return (
+              <div key={index} className='tags-group-icon-pair ml-6 select-none'>
+                <div
+                  style={{ background: g.color_1 }}
+                  className={
+                    'tags-group-icon w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'
+                  }>
+                  <LazyImage
+                    priority={true}
+                    src={g.img_1}
+                    title={g.title_1}
+                    className='w-2/3 hidden xl:block'
+                  />
+                </div>
+                <div
+                  style={{ background: g.color_2 }}
+                  className={
+                    'tags-group-icon  mt-5 w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'
+                  }>
+                  <LazyImage
+                    priority={true}
+                    src={g.img_2}
+                    title={g.title_2}
+                    className='w-2/3 hidden xl:block'
+                  />
+                </div>
               </div>
-              <div
-                style={{ background: g.color_2 }}
-                className={
-                  'tags-group-icon  mt-5 w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'
-                }>
-                <LazyImage
-                  priority={true}
-                  src={g.img_2}
-                  title={g.title_2}
-                  className='w-2/3 hidden xl:block'
-                />
-              </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
-    </div>
+    : null
   )
 }
 
@@ -229,41 +263,43 @@ function TopGroup(props) {
 
   // 获取置顶推荐文章
   const topPosts = getTopPosts({ latestPosts, allNavPages })
-
+  console.log(topPosts);
   return (
-    <div
-      id='hero-right-wrapper'
-      onMouseLeave={handleMouseLeave}
-      className='flex-1 relative w-full'>
-      {/* 置顶推荐文章 */}
+    topPosts?.length && siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG) ?
       <div
-        id='top-group'
-        className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3 xl:h-[342px]'>
-        {topPosts?.map((p, index) => {
-          return (
-            <Link href={`${siteConfig('SUB_PATH', '')}/${p?.slug}`} key={index}>
-              <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
-                <LazyImage
-                  priority={index === 0}
-                  className='h-24 object-cover'
-                  alt={p?.title}
-                  src={p?.pageCoverThumbnail || siteInfo?.pageCover}
-                />
-                <div className='group-hover:text-indigo-600 dark:group-hover:text-yellow-600 line-clamp-2 overflow-hidden m-2 font-semibold'>
-                  {p?.title}
+        id='hero-right-wrapper'
+        onMouseLeave={handleMouseLeave}
+        className='flex-1 relative w-full'>
+        {/* 置顶推荐文章 */}
+        <div
+          id='top-group'
+          className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3 xl:h-[342px]'>
+          {topPosts?.map((p, index) => {
+            return (
+              <Link href={`${siteConfig('SUB_PATH', '')}/${p?.slug}`} key={index}>
+                <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
+                  <LazyImage
+                    priority={index === 0}
+                    className='h-24 object-cover'
+                    alt={p?.title}
+                    src={p?.pageCoverThumbnail || siteInfo?.pageCover}
+                  />
+                  <div className='group-hover:text-indigo-600 dark:group-hover:text-yellow-600 line-clamp-2 overflow-hidden m-2 font-semibold'>
+                    {p?.title}
+                  </div>
+                  {/* hover 悬浮的 ‘荐’ 字 */}
+                  <div className='opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 duration-200 transition-all absolute -top-2 -left-2 bg-indigo-600 dark:bg-yellow-600  text-white rounded-xl overflow-hidden pr-2 pb-2 pl-4 pt-4 text-xs'>
+                    {locale.COMMON.RECOMMEND_BADGES}
+                  </div>
                 </div>
-                {/* hover 悬浮的 ‘荐’ 字 */}
-                <div className='opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 duration-200 transition-all absolute -top-2 -left-2 bg-indigo-600 dark:bg-yellow-600  text-white rounded-xl overflow-hidden pr-2 pb-2 pl-4 pt-4 text-xs'>
-                  {locale.COMMON.RECOMMEND_BADGES}
-                </div>
-              </div>
-            </Link>
-          )
-        })}
+              </Link>
+            )
+          })}
+        </div>
+        {/* 一个大的跳转文章卡片 */}
+        <TodayCard cRef={todayCardRef} siteInfo={siteInfo} />
       </div>
-      {/* 一个大的跳转文章卡片 */}
-      <TodayCard cRef={todayCardRef} siteInfo={siteInfo} />
-    </div>
+    : null
   )
 }
 
@@ -271,6 +307,7 @@ function TopGroup(props) {
  * 获取推荐置顶文章
  */
 function getTopPosts({ latestPosts, allNavPages }) {
+  console.log(siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG));
   // 默认展示最近更新
   if (
     !siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG) ||
