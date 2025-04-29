@@ -18,14 +18,14 @@ export const MenuItemDrop = ({ link }) => {
         <Link
           target={link?.target}
           href={link?.href}
-          className=' hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest'>
+          className=' text-gray-600 hover:text-gray-800 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest'>
           {link?.icon && <i className={link?.icon} />} {link?.name}
         </Link>
       )}
       {/* 含子菜单的按钮 */}
       {hasSubMenu && (
         <>
-          <div className='cursor-pointer  hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest'>
+          <div className='cursor-pointer  text-gray-600 hover:text-gray-800 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest'>
             {link?.icon && <i className={link?.icon} />} {link?.name}
           </div>
         </>

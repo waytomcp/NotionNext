@@ -140,7 +140,7 @@ const Header = props => {
       {/* 顶部导航菜单栏 */}
       <nav
         id='nav'
-        className={`z-20 h-16 top-0 w-full duration-300 transition-all shadow
+        className={`z-20 h-16 top-0 w-full duration-300 transition-all bg-white  shadow-sm
             ${fixedNav ? 'fixed' : 'relative bg-transparent'} 
             ${textWhite ? 'text-white ' : 'text-black dark:text-white'}  
             ${navBgWhite ? 'bg-white dark:bg-[#18171d] shadow' : 'bg-transparent'}`}>
@@ -158,7 +158,7 @@ const Header = props => {
             </div>
             <div
               className={`absolute transition-all duration-700 ${activeIndex === 1 ? 'opacity-100 mb-0' : '-mb-20 opacity-0 invisible'}`}>
-              <h1 className='font-bold text-center text-light-400 dark:text-gray-400'>
+              <h1 className='font-bold text-center text-gray-600 hover:text-gray-800'>
                 {siteConfig('AUTHOR') || siteConfig('TITLE')}{' '}
                 {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
               </h1>
