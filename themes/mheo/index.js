@@ -109,7 +109,7 @@ const LayoutBase = props => {
         className={`flex-grow ${maxWidth} relative max-w-7xl mx-auto`}>
         <div
           id='container-inner'
-          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} lg:flex justify-center relative mx-10 z-10`}>
+          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} lg:flex justify-center relative mx-10 z-10 mt-4`}>
           <div className='hidden xl:block'>
             {slotRight}
           </div>  
