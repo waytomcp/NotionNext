@@ -3,6 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import CONFIG from '../config'
+import BLOG from '@/blog.config'
 
 /**
  * 关联推荐文章
@@ -20,6 +21,9 @@ export default function PostRecommend({ recommendPosts, siteInfo }) {
     return <></>
   }
 
+  // 用于记录已使用的随机封面,避免重复 (将 usedCovers 移到 map 循环外部)
+  const usedCovers = new Set()
+
   return (
     <div className='pt-8 hidden md:block'>
       {/* 推荐文章 */}
@@ -34,9 +38,23 @@ export default function PostRecommend({ recommendPosts, siteInfo }) {
 
       <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
         {recommendPosts.map(post => {
-          const headerImage = post?.pageCoverThumbnail
-            ? post?.pageCoverThumbnail
-            : siteInfo?.pageCover
+          // const usedCovers = new Set() // <--- 从这里移除
+
+          let headerImage
+          if (post?.pageCoverThumbnail) {
+            headerImage = post.pageCoverThumbnail
+          } else {
+            // 从covers中获取未使用的随机图片
+            const availableCovers = BLOG.POST_RANDOM_COVER.filter(cover => !usedCovers.has(cover)) || []
+            if (availableCovers.length > 0) {
+              const randomIndex = Math.floor(Math.random() * availableCovers.length)
+              headerImage = availableCovers[randomIndex]
+              usedCovers.add(headerImage)
+            } else {
+              // 如果所有封面都已使用或没有可用封面,使用默认封面
+              headerImage = siteInfo?.pageCover
+            }
+          }
 
           return (
             <Link
