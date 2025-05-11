@@ -16,6 +16,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "npm-build": "npm run build  2>&1 | tee build.log",
+    "npm-start": "cross-env ENABLE_CACHE=true VERCEL_ENV=production npm run start 2>&1 | tee output.log",
     "post-build": "next-sitemap --config next-sitemap.config.js",
     "export": "cross-env EXPORT=true next build && next-sitemap --config next-sitemap.config.js",
     "bundle-report": "cross-env ANALYZE=true next build",
