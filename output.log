@@ -1,0 +1,138 @@
+
+> notion-next@4.8.3 start
+> next start
+
+  ▲ Next.js 14.2.4
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+Deleted existing sitemap.xml from public directory
+Deleted existing sitemap.xml from root directory
+ ✓ Ready in 508ms
+---    SiteDataByPageId       --------------------------
+[API-->>请求] from:slug-props-servers id:1c7c6303e6c980bbb8f1f53b03ea968e 
+---    SiteDataByPageId       --------------------------
+[API-->>请求] from:page-0 id:1c7c6303e6c980bbb8f1f53b03ea968e 
+---    SiteDataByPageId       --------------------------
+[API-->>请求] from:category-props id:1c7c6303e6c980bbb8f1f53b03ea968e 
+[API<<--响应] 耗时:10032ms - from:slug-props-servers
+[API-->>缓存写入]: page_block_1c7c6303e6c980bbb8f1f53b03ea968e
+[API-->>缓存]: page_content_1c7c6303e6c980bbb8f1f53b03ea968e_ setWithCacheTime: default
+[API-->>缓存写入]: page_content_1c7c6303e6c980bbb8f1f53b03ea968e_
+>>>>>>>>*************--- getSiteDataByPageId:pageid:1c7c6303e6c980bbb8f1f53b03ea968e  from: slug-props-servers -----------
+有效Page数量 373
+**********pageIds:*********************len: pageIds: 373 blockIdsNeedFetch: 0
+-------------collectionProperties: 368
+cacheGlobalInfo: undefined undefined undefined
+[API-->>请求] from:config-table id:1c7c6303-e6c9-81e7-bd0a-d2c543a3c4f1 
+[API<<--响应] 耗时:1691ms - from:config-table
+[API-->>缓存写入]: page_block_1c7c6303-e6c9-81e7-bd0a-d2c543a3c4f1
+[API-->>缓存]: page_content_1c7c6303-e6c9-81e7-bd0a-d2c543a3c4f1_ setWithCacheTime: default
+[API-->>缓存写入]: page_content_1c7c6303-e6c9-81e7-bd0a-d2c543a3c4f1_
+[Notion配置]请求配置数据  1c7c6303-e6c9-81e7-bd0a-d2c543a3c4f1
+[Notion配置] LINK https://www.waytomcp.com
+[Notion配置] THEME heo
+[Notion配置] KEYWORDS MCP,waytomcp,AI,AGI,AIGC
+[Notion配置] AUTHOR waytomcp
+[Notion配置] BIO WaytoMCP
+[Notion配置] POST_URL_PREFIX_MAPPING_CATEGORY {
+"知行合一":"learning",
+"技术分享":"technology",
+"心情随笔":"essay"
+}
+[Notion配置] GLOBAL_JS console.log('test');
+[Notion配置] CUSTOM_MENU true
+[Notion配置] CUSTOM_RIGHT_CLICK_CONTEXT_MENU false
+[Notion配置] LANG en-CN
+[Notion配置] SINCE 2025
+[Notion配置] CONTACT_EMAIL support@waytomcp.com
+[Notion配置] HEO_HOME_POST_TWO_COLS true
+[API-->>请求] from:data-notice id:1c7c6303-e6c9-8111-8891-ee9427bb3a80 
+[API<<--响应] 耗时:1956ms - from:data-notice
+[API-->>缓存写入]: page_block_1c7c6303-e6c9-8111-8891-ee9427bb3a80
+[API-->>缓存]: page_content_1c7c6303-e6c9-8111-8891-ee9427bb3a80_ setWithCacheTime: default
+[API-->>缓存写入]: page_content_1c7c6303-e6c9-8111-8891-ee9427bb3a80_
+[API-->>缓存写入]: site-info-cache
+缓存site-info-cache 20 31 8 3600
+[API-->>缓存]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e setWithCacheTime: default
+[API-->>缓存写入]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: T]
+Warning: data for page "/[prefix]" (path "/servers") is 1.14 MB which exceeds the threshold of 128 kB, this amount of data can reduce performance.
+See more info here: https://nextjs.org/docs/messages/large-page-data
+[API<<--响应] 耗时:13007ms - from:page-0
+[API-->>缓存写入]: page_block_1c7c6303e6c980bbb8f1f53b03ea968e
+[API-->>缓存]: page_content_1c7c6303e6c980bbb8f1f53b03ea968e_ setWithCacheTime: default
+[API-->>缓存写入]: page_content_1c7c6303e6c980bbb8f1f53b03ea968e_
+>>>>>>>>*************--- getSiteDataByPageId:pageid:1c7c6303e6c980bbb8f1f53b03ea968e  from: page-0 -----------
+有效Page数量 373
+**********pageIds:*********************len: pageIds: 373 blockIdsNeedFetch: 0
+-------------collectionProperties: 368
+cacheGlobalInfo: 20 31 8
+[缓存-->>API]: page_content_1c7c6303-e6c9-8111-8891-ee9427bb3a80_
+[API-->>缓存]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e setWithCacheTime: default
+[API-->>缓存写入]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: x]
+Warning: data for page "/page/[page]" (path "/page/0") is 499 kB which exceeds the threshold of 128 kB, this amount of data can reduce performance.
+See more info here: https://nextjs.org/docs/messages/large-page-data
+[API<<--响应] 耗时:11450ms - from:category-props
+[API-->>缓存写入]: page_block_1c7c6303e6c980bbb8f1f53b03ea968e
+[API-->>缓存]: page_content_1c7c6303e6c980bbb8f1f53b03ea968e_ setWithCacheTime: default
+[API-->>缓存写入]: page_content_1c7c6303e6c980bbb8f1f53b03ea968e_
+>>>>>>>>*************--- getSiteDataByPageId:pageid:1c7c6303e6c980bbb8f1f53b03ea968e  from: category-props -----------
+有效Page数量 373
+**********pageIds:*********************len: pageIds: 373 blockIdsNeedFetch: 0
+-------------collectionProperties: 368
+cacheGlobalInfo: 20 31 8
+[缓存-->>API]: page_content_1c7c6303-e6c9-8111-8891-ee9427bb3a80_
+[API-->>缓存]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e setWithCacheTime: default
+[API-->>缓存写入]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: l]
+Warning: data for page "/category/[category]" (path "/category/%F0%9F%8E%AE%E6%B8%B8%E6%88%8F") is 502 kB which exceeds the threshold of 128 kB, this amount of data can reduce performance.
+See more info here: https://nextjs.org/docs/messages/large-page-data
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: l]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: l]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: c]
+Warning: data for page "/category/[category]/page/[page]" (path "/category/%F0%9F%94%92%E5%AE%89%E5%85%A8/page/0") is 500 kB which exceeds the threshold of 128 kB, this amount of data can reduce performance.
+See more info here: https://nextjs.org/docs/messages/large-page-data
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: l]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: l]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: c]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: l]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: l]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: l]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: l]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: l]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: c]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: l]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: l]
+---    SiteDataByPageId       --------------------------
+[缓存-->>API]: site_data_1c7c6303e6c980bbb8f1f53b03ea968e
+[Function: c]
