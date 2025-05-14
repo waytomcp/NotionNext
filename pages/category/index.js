@@ -16,7 +16,7 @@ export default function Category(props) {
 }
 
 export async function getStaticProps({ locale }) {
-  const props = await getGlobalData({ from: 'category-index-props', locale })
+  const props = await getGlobalData({ from: 'category-index-props', locale})
   delete props.allPages
   return {
     props,

@@ -16,6 +16,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "npm-build": "npm run build  2>&1 | tee build.log",
+    "npm-start": "npm run start",
     "post-build": "next-sitemap --config next-sitemap.config.js",
     "export": "cross-env EXPORT=true next build && next-sitemap --config next-sitemap.config.js",
     "bundle-report": "cross-env ANALYZE=true next build",
@@ -24,7 +26,7 @@
   },
   "dependencies": {
     "@clerk/localizations": "^3.0.4",
-    "@clerk/nextjs": "^5.1.5",
+    "@clerk/nextjs": "^5.7.5",
     "@headlessui/react": "^1.7.15",
     "@next/bundle-analyzer": "^12.1.1",
     "@vercel/analytics": "^1.0.0",

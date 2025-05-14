@@ -10,7 +10,7 @@ import { useRef, useState } from 'react'
  * @returns
  */
 export default function CategoryBar(props) {
-  const { categoryOptions, border = true } = props
+  const { categoryOptions, border = true, subType } = props
   const { locale } = useGlobal()
   const [scrollRight, setScrollRight] = useState(false)
   // 创建一个ref引用
@@ -38,9 +38,13 @@ export default function CategoryBar(props) {
         id='category-bar-items'
         ref={categoryBarItemsRef}
         className='scroll-smooth max-w-4xl rounded-lg scroll-hidden flex justify-start flex-nowrap items-center overflow-x-scroll'>
-        <MenuItem href='/' name={locale.NAV.INDEX} />
+        <MenuItem href='/category' name={locale.NAV.ALL} />
         {categoryOptions?.map((c, index) => (
-          <MenuItem key={index} href={`/category/${c.name}`} name={c.name} />
+          <MenuItem 
+            key={index} 
+            href={subType ? `/${subType}/${c.name}` : `/category/${c.name}`} 
+            name={c.name} 
+          />
         ))}
       </div>
 
@@ -56,7 +60,7 @@ export default function CategoryBar(props) {
           )}
         </div>
         <Link
-          href='/category'
+          href={subType ? `/${subType}` : '/category'}
           className='whitespace-nowrap font-bold text-gray-900 dark:text-white transition-colors duration-200 hover:text-indigo-600 dark:hover:text-yellow-600'>
           {locale.MENU.CATEGORY}
         </Link>

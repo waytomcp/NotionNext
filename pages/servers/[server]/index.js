@@ -4,28 +4,39 @@ import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
- * 分类页
+ * 服务器分类页
  * @param {*} props
  * @returns
  */
-export default function Category(props) {
+export default function Server(props) {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
   return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
 }
 
-export async function getStaticProps({ params: { category }, locale }) {
-  const from = 'category-props'
-  let props = await getGlobalData({ from, locale})
+export async function getStaticProps({ params: { server }, locale }) {
+  const from = 'server-props'
+  let props = await getGlobalData({ from, locale })
 
-  // 过滤状态,移除subType限制
+    
+  // 过滤分类选项，只保留包含 servers 类型文章的分类
+  if (props.categoryOptions) {
+    props.categoryOptions = props.categoryOptions.filter(category => {
+      return category.subTypes && category.subTypes.includes('servers')
+    })
+  }
+
+  // 过滤状态
   props.posts = props.allPages?.filter(
-    page => page.type === 'Post' && page.status === 'Published'
+    page => page.type === 'Post' && page.status === 'Published' && page.subType === 'servers'
   )
 
   // 处理过滤
   props.posts = props.posts.filter(
-    post => post && post.category && post.category.includes(category)
+    post => post && post.category && post.category.includes(server)
   )
+
+  props.subType = 'servers'
+
   // 处理文章页数
   props.postCount = props.posts.length
   // 处理分页
@@ -40,7 +51,7 @@ export async function getStaticProps({ params: { category }, locale }) {
 
   delete props.allPages
 
-  props = { ...props, category }
+  props = { ...props, category: server, server }
 
   return {
     props,
@@ -55,11 +66,13 @@ export async function getStaticProps({ params: { category }, locale }) {
 }
 
 export async function getStaticPaths() {
-  const from = 'category-paths'
+  const from = 'server-paths'
   const { categoryOptions } = await getGlobalData({ from })
+  
+  // 获取所有分类作为服务器路径
   return {
     paths: Object.keys(categoryOptions).map(category => ({
-      params: { category: categoryOptions[category]?.name }
+      params: { server: categoryOptions[category]?.name }
     })),
     fallback: true
   }

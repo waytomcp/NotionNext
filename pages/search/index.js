@@ -14,6 +14,7 @@ const Search = props => {
 
   const router = useRouter()
   const keyword = router?.query?.s
+console.log('-------------->>>>>>>>>>>>>>keyword&&&&', keyword);
 
   let filteredPosts
   // 静态过滤

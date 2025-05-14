@@ -7,6 +7,7 @@ import { InfoCard } from './InfoCard'
 import LatestPostsGroupMini from './LatestPostsGroupMini'
 import TagGroups from './TagGroups'
 import TouchMeCard from './TouchMeCard'
+import CategoryGroup from './CategoryGroupServers'
 
 const FaceBookPage = dynamic(
   () => {
@@ -27,7 +28,7 @@ const FaceBookPage = dynamic(
  * @returns
  */
 export default function SideRight(props) {
-  const { post, tagOptions, currentTag, rightAreaSlot } = props
+  const { post, tagOptions, currentTag, categoryOptions, currentCategory, rightAreaSlot } = props
 
   // 只摘取标签的前60个，防止右侧过长
   const sortedTags = tagOptions?.slice(0, 60) || []
@@ -40,7 +41,7 @@ export default function SideRight(props) {
         {/* 文章页显示目录 */}
         {post && post.toc && post.toc.length > 0 && (
           <Card className='bg-white dark:bg-[#1e1e1e] wow fadeInUp'>
-            <div style={{ maxHeight: 'calc(-172px + 100vh)', overflowY: 'auto', paddingRight: '8px' }}>
+            <div style={{ maxHeight: 'calc(-120px + 100vh)', overflowY: 'auto', paddingRight: '8px' }}>
               <Catalog toc={post.toc} />
             </div>
           </Card>
@@ -65,10 +66,10 @@ export default function SideRight(props) {
         <Live2D /> */}
 
         {/* 标签和成绩 */}
-        <Card
-          className={
-            'bg-white dark:bg-[#1e1e1e] dark:text-white hover:border-indigo-600  dark:hover:border-yellow-600 duration-200'
-          }>
+        <Card className='bg-white dark:bg-[#1e1e1e] dark:text-white hover:border-indigo-600 dark:hover:border-yellow-600 duration-200'>
+          <CategoryGroup currentCategory={currentCategory} categories={categoryOptions} />
+        </Card>
+        <Card className='bg-white dark:bg-[#1e1e1e] dark:text-white hover:border-indigo-600 dark:hover:border-yellow-600 duration-200'>
           <TagGroups tags={sortedTags} currentTag={currentTag} />
           <hr className='mx-1 flex border-dashed relative my-4' />
           <AnalyticsCard {...props} />

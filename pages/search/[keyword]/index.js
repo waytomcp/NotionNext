@@ -3,8 +3,14 @@ import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
+import { useRouter } from 'next/router'
 
 const Index = props => {
+  const router = useRouter()
+  const keyword = router?.query?.s
+  console.log('-------------->>>>>>>>>>>>>>router:', router);
+
+  console.log('-------------->>>>>>>>>>>>>>keyword--------', props.keyword);
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
   return <DynamicLayout theme={theme} layoutName='LayoutSearch' {...props} />
 }

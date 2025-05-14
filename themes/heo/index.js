@@ -22,7 +22,7 @@ import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import BlogPostArchive from './components/BlogPostArchive'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
@@ -43,6 +43,8 @@ import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
+import { SignIn, SignUp } from '@clerk/nextjs'
+import SearchInput from './components/SearchInput'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -66,7 +68,14 @@ const LayoutBase = props => {
           <NoticeBar />
                 {/* 顶部导航 */}
          <Header {...props} />
-          <Hero {...props} />
+          {/* <Hero {...props} /> */}
+          <div className="flex flex-col items-center justify-center py-24 bg-[#f5f5f5] dark:bg-[#1e1e1e]">
+            <h1 className="text-4xl font-bold mb-2">通往 MCP 之路</h1>
+            <p className="text-gray-600 dark:text-gray-400 mb-8">最全的 MCP 服务</p>
+            <div className="max-w-[86rem] w-full mx-auto px-5">
+              <SearchInput {...props} />
+            </div>
+          </div>
         </>
       ) : <Header {...props} />}
       {fullWidth ? null : <PostHeader {...props} isDarkMode={isDarkMode} />}
@@ -136,10 +145,17 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
+  const cRef = useRef(null)
+  const { locale } = useGlobal()
+  useEffect(() => {
+    // 自动聚焦到搜索框
+    cRef?.current?.focus()
+  }, [])
   return (
     <div id='post-outer-wrapper' className='px-5 md:px-0'>
       {/* 文章分类条 */}
-      <CategoryBar {...props} />
+      {/* <CategoryBar {...props} /> */}
+      <SearchInput cRef={cRef} {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
         <BlogPostListPage {...props} />
       ) : (
@@ -156,9 +172,16 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   return (
-    <div id='post-outer-wrapper' className='px-5  md:px-0'>
-      {/* 文章分类条 */}
-      <CategoryBar {...props} />
+    <div id='post-outer-wrapper' className='px-5 md:px-0'>
+      {/* 搜索框 */}
+      <div className="mb-8">
+        <SearchInput />
+      </div>
+      
+      {/* 文章分类条
+      <CategoryBar {...props} /> */}
+
+      {/* 文章列表 */}
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
         <BlogPostListPage {...props} />
       ) : (
@@ -195,18 +218,18 @@ const LayoutSearch = props => {
   }, [])
   return (
     <div currentSearch={currentSearch}>
-      <div id='post-outer-wrapper' className='px-5  md:px-0'>
-        {!currentSearch ? (
-          <SearchNav {...props} />
-        ) : (
-          <div id='posts-wrapper'>
+      <div id='post-outer-wrapper' className='px-5 md:px-0'>
+        {/* 搜索框始终显示 */}
+        <div className="mb-8">
+        <SearchNav {...props} />
+        </div>
+        <div id='posts-wrapper'>
             {siteConfig('POST_LIST_STYLE') === 'page' ? (
               <BlogPostListPage {...props} />
             ) : (
               <BlogPostListScroll {...props} />
             )}
-          </div>
-        )}
+          </div>  
       </div>
     </div>
   )
@@ -419,7 +442,7 @@ const Layout404 = props => {
  * @returns
  */
 const LayoutCategoryIndex = props => {
-  const { categoryOptions } = props
+  const { categoryOptions, subType } = props
   const { locale } = useGlobal()
 
   return (
@@ -431,10 +454,15 @@ const LayoutCategoryIndex = props => {
         id='category-list'
         className='duration-200 flex flex-wrap m-10 justify-center'>
         {categoryOptions?.map(category => {
+          // 根据是否有 subType 来决定链接路径
+          const linkPath = subType 
+            ? `/${subType}/${category.name}`
+            : `/category/${category.name}`
+            
           return (
             <Link
               key={category.name}
-              href={`/category/${category.name}`}
+              href={linkPath}
               passHref
               legacyBehavior>
               <div
@@ -454,6 +482,7 @@ const LayoutCategoryIndex = props => {
     </div>
   )
 }
+
 
 /**
  * 标签列表
@@ -497,6 +526,59 @@ const LayoutTagIndex = props => {
   )
 }
 
+/**
+ * 登录页面
+ * @param {*} props
+ * @returns
+ */
+const LayoutSignIn = props => {
+  const { post } = props
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+  return (
+    <>
+      <div className='grow mt-20'>
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignIn />
+          </div>
+        )}
+        <div id='article-wrapper'>
+          <NotionPage post={post} />
+        </div>
+      </div>
+    </>
+  )
+}
+
+/**
+ * 注册页面
+ * @param {*} props
+ * @returns
+ */
+const LayoutSignUp = props => {
+  const { post } = props
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+  return (
+    <>
+      <div className='grow mt-20'>
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignUp />
+          </div>
+        )}
+        <div id='article-wrapper'>
+          <NotionPage post={post} />
+        </div>
+      </div>
+    </>
+  )
+}
+
+
 export {
   Layout404,
   LayoutArchive,
@@ -507,5 +589,7 @@ export {
   LayoutSearch,
   LayoutSlug,
   LayoutTagIndex,
+  LayoutSignIn,
+  LayoutSignUp,
   CONFIG as THEME_CONFIG
 }

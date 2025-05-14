@@ -10,6 +10,8 @@ import RandomPostButton from './RandomPostButton'
 import ReadingProgress from './ReadingProgress'
 import SearchButton from './SearchButton'
 import SlideOver from './SlideOver'
+import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 页头：顶部导航
@@ -21,6 +23,8 @@ const Header = props => {
   const [textWhite, setTextWhite] = useState(false)
   const [navBgWhite, setBgWhite] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
+  const { locale } = useGlobal()
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
   const router = useRouter()
   const slideOverRef = useRef()
@@ -167,6 +171,19 @@ const Header = props => {
 
           {/* 右侧固定 */}
           <div className='flex flex-shrink-0 justify-end items-center w-48'>
+            {/* 登录相关 */}
+            {enableClerk && (
+              <>
+                <SignedOut>
+                  <SignInButton mode='modal'>
+                    <button className='bg-green-500 hover:bg-green-600 text-white rounded-lg px-3 py-2'>
+                      {locale.COMMON.SIGN_IN}
+                    </button>
+                  </SignInButton>
+                </SignedOut>
+                <UserButton />
+              </>
+            )}
             <RandomPostButton {...props} />
             <SearchButton {...props} />
             {!JSON.parse(siteConfig('THEME_SWITCH')) && (

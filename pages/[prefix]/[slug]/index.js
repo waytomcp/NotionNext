@@ -47,6 +47,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { prefix, slug }, locale }) {
   const fullSlug = prefix + '/' + slug
   const from = `slug-props-${fullSlug}`
+  console.log('************** getStaticProps1**************', fullSlug)
   const props = await getGlobalData({ from, locale })
 
   // 在列表内查找文章
