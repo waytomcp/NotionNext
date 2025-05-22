@@ -22,7 +22,7 @@ import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import BlogPostArchive from './components/BlogPostArchive'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
@@ -39,12 +39,11 @@ import PostHeader from './components/PostHeader'
 import { PostLock } from './components/PostLock'
 import PostRecommend from './components/PostRecommend'
 import SearchNav from './components/SearchNav'
-import SideRight from './components/SideRight'
+import SideLeft from './components/SideLeft'
+// import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
-import { SignIn, SignUp } from '@clerk/nextjs'
-import SearchInput from './components/SearchInput'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -61,32 +60,30 @@ const LayoutBase = props => {
 
   const headerSlot = (
     <header>
+      {/* 顶部导航 */}
+      <Header {...props} />
 
-      {/* 通知横幅 */}
-      {router.route === '/' ? (
-        <>
-          <NoticeBar />
-                {/* 顶部导航 */}
-         <Header {...props} />
-          {/* <Hero {...props} /> */}
-          <div className="flex flex-col items-center justify-center py-24 bg-[#f5f5f5] dark:bg-[#1e1e1e]">
-            <h1 className="text-4xl font-bold mb-2">通往 MCP 之路</h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-8">最全的 MCP 服务</p>
-            <div className="max-w-[86rem] w-full mx-auto px-5">
-              <SearchInput {...props} />
-            </div>
-          </div>
-        </>
-      ) : <Header {...props} />}
+      {/* 通知横幅 - 仅在首页显示 */}
+      {router.route === '/' && <NoticeBar />}
+
+      {/* Hero组件 - 在首页或分类页显示 */}
+      {(router.route === '/' || router.route.startsWith('/category') || router.route.startsWith('/search') || router.route.startsWith('/tag')) && (
+        <div className="bg-slate-100 dark:bg-slate-800 py-8"> {/* 为Hero区域添加背景色和垂直内边距 */}
+          <Hero {...props} />
+        </div>
+      )}
+
+      {/* 文章页的 PostHeader - 逻辑保持不变 */}
       {fullWidth ? null : <PostHeader {...props} isDarkMode={isDarkMode} />}
     </header>
   )
 
   // 右侧栏 用户信息+标签列表
-  const slotRight =
-    router.route === '/404' || fullWidth ? null : <SideRight {...props} />
+  const isStartWithArticle = router.route.startsWith('/[prefix]');
+  const slotRight = !isStartWithArticle || fullWidth ? null : <SideLeft {...props} />
 
-  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
+  // const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
+  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-96rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
 
   const HEO_HERO_BODY_REVERSE = siteConfig(
     'HEO_HERO_BODY_REVERSE',
@@ -102,31 +99,34 @@ const LayoutBase = props => {
 
   return (
     <div
-      id='theme-heo'
-      className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
+      id='theme-mheo'
+      // className={`${siteConfig('FONT_STYLE')} bg-gray-50 dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
+      className={`bg-gray-50 dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
       <Style />
 
       {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
       {headerSlot}
 
       {/* 主区块 */}
+      {/* <main
+        id='wrapper-outer'
+        className={`${router.route === '/' || router.route.indexOf('category') > -1 ? 'container' : ''} flex-grow ${maxWidth} relative ${router.route === '/' || router.route.indexOf('category') > -1 ? '' : 'max-w-7xl'} mx-auto`}> */}
       <main
         id='wrapper-outer'
-        className={`flex-grow w-full ${maxWidth} mx-auto relative md:px-5`}>
+        className={`container flex-grow ${maxWidth} relative } mx-auto`}>
         <div
           id='container-inner'
-          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} w-full mx-auto lg:flex justify-center relative z-10`}>
-          <div className={`w-full h-auto ${className || ''}`}>
-            {/* 主区上部嵌入 */}
-            {/* {slotTop} */}
-            {children}
-          </div>
- 
-          <div className='lg:px-2'></div>
-          {/* 主区快右侧   */}
+          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} lg:flex justify-center relative mx-10 z-10 mt-4`}>
           <div className='hidden xl:block'>
             {slotRight}
           </div>  
+          <div className='lg:px-2'></div>
+          <div className={`w-full h-auto ${className || ''}`}>
+            {/* 主区上部嵌入 */}
+            {slotTop}
+            {children}
+          </div>
+         
         </div>
       </main>
 
@@ -145,17 +145,10 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-  const cRef = useRef(null)
-  const { locale } = useGlobal()
-  useEffect(() => {
-    // 自动聚焦到搜索框
-    cRef?.current?.focus()
-  }, [])
   return (
-    <div id='post-outer-wrapper' className='px-5 md:px-0'>
+    <div id='post-outer-wrapper' className='category-container px-5 md:px-0'>
       {/* 文章分类条 */}
-      {/* <CategoryBar {...props} /> */}
-      <SearchInput cRef={cRef} {...props} />
+      <CategoryBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
         <BlogPostListPage {...props} />
       ) : (
@@ -172,16 +165,9 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   return (
-    <div id='post-outer-wrapper' className='px-5 md:px-0'>
-      {/* 搜索框 */}
-      <div className="mb-8">
-        <SearchInput />
-      </div>
-      
-      {/* 文章分类条
-      <CategoryBar {...props} /> */}
-
-      {/* 文章列表 */}
+    <div id='post-outer-wrapper' className='category-container px-5 md:px-0 w-full'>
+      {/* 文章分类条 */}
+      <CategoryBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
         <BlogPostListPage {...props} />
       ) : (
@@ -206,7 +192,8 @@ const LayoutSearch = props => {
     if (currentSearch) {
       setTimeout(() => {
         replaceSearchResult({
-          doms: document.getElementsByClassName('replace'),
+          // doms: document.getElementsByClassName('replace'),
+          doms: document.getElementById('posts-wrapper'),
           search: currentSearch,
           target: {
             element: 'span',
@@ -218,20 +205,25 @@ const LayoutSearch = props => {
   }, [])
   return (
     <div currentSearch={currentSearch}>
-      <div id='post-outer-wrapper' className='px-5 md:px-0'>
-        {/* 搜索框始终显示 */}
-        <div className="mb-8">
-        <SearchNav {...props} />
-        </div>
-        <div id='posts-wrapper'>
-            {siteConfig('POST_LIST_STYLE') === 'page' ? (
-              <BlogPostListPage {...props} />
-            ) : (
-              <BlogPostListScroll {...props} />
-            )}
-          </div>  
+      <div id='post-outer-wrapper' className='category-container px-5 md:px-0 w-full'>
+          <div id='posts-list' className='category-container'>
+            <CategoryBar {...props} />
+          </div>
+            {!currentSearch ? (
+          <div>
+            <SearchNav {...props} />
+          </div>
+          ) : (
+                <div id='posts-wrapper' className='article-container'>
+                {siteConfig('POST_LIST_STYLE') === 'page' ? (
+                  <BlogPostListPage {...props} />
+                ) : (
+                  <BlogPostListScroll {...props} />
+                )}
+                </div>
+          )}
+          </div>
       </div>
-    </div>
   )
 }
 
@@ -314,7 +306,7 @@ const LayoutSlug = props => {
   return (
     <>
       <div
-        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 `}>
+        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow rounded-lg lg:px-2 lg:py-4 shadow-sm `}>
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
@@ -442,8 +434,8 @@ const Layout404 = props => {
  * @returns
  */
 const LayoutCategoryIndex = props => {
-  const {subType } = props
-  const { locale,categoryOptions } = useGlobal()
+  const { categoryOptions } = props
+  const { locale } = useGlobal()
 
   return (
     <div id='category-outer-wrapper' className='mt-8 px-5 md:px-0'>
@@ -454,15 +446,10 @@ const LayoutCategoryIndex = props => {
         id='category-list'
         className='duration-200 flex flex-wrap m-10 justify-center'>
         {categoryOptions?.map(category => {
-          // 根据是否有 subType 来决定链接路径
-          const linkPath = subType 
-            ? `/${subType}/${category.name}`
-            : `/category/${category.name}`
-            
           return (
             <Link
               key={category.name}
-              href={linkPath}
+              href={`/category/${category.name}`}
               passHref
               legacyBehavior>
               <div
@@ -482,7 +469,6 @@ const LayoutCategoryIndex = props => {
     </div>
   )
 }
-
 
 /**
  * 标签列表
@@ -526,59 +512,6 @@ const LayoutTagIndex = props => {
   )
 }
 
-/**
- * 登录页面
- * @param {*} props
- * @returns
- */
-const LayoutSignIn = props => {
-  const { post } = props
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-
-  return (
-    <>
-      <div className='grow mt-20'>
-        {/* clerk预置表单 */}
-        {enableClerk && (
-          <div className='flex justify-center py-6'>
-            <SignIn />
-          </div>
-        )}
-        <div id='article-wrapper'>
-          <NotionPage post={post} />
-        </div>
-      </div>
-    </>
-  )
-}
-
-/**
- * 注册页面
- * @param {*} props
- * @returns
- */
-const LayoutSignUp = props => {
-  const { post } = props
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-
-  return (
-    <>
-      <div className='grow mt-20'>
-        {/* clerk预置表单 */}
-        {enableClerk && (
-          <div className='flex justify-center py-6'>
-            <SignUp />
-          </div>
-        )}
-        <div id='article-wrapper'>
-          <NotionPage post={post} />
-        </div>
-      </div>
-    </>
-  )
-}
-
-
 export {
   Layout404,
   LayoutArchive,
@@ -589,7 +522,5 @@ export {
   LayoutSearch,
   LayoutSlug,
   LayoutTagIndex,
-  LayoutSignIn,
-  LayoutSignUp,
   CONFIG as THEME_CONFIG
 }

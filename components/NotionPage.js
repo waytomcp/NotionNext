@@ -277,10 +277,11 @@ const AdEmbed = dynamic(
 )
 
 const Collection = dynamic(
-  () =>
-    import('react-notion-x/build/third-party/collection').then(
-      m => m.Collection
-    ),
+  async () => {
+    // 返回一个不渲染任何内容的组件
+    const EmptyCollection = () => null;
+    return EmptyCollection;
+  },
   {
     ssr: true
   }

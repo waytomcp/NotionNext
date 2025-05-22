@@ -2,15 +2,15 @@
 
 const BLOG = {
   // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
-  NOTION_PAGE_ID:
-    process.env.NOTION_PAGE_ID ||
-    '1c7c6303e6c980bbb8f1f53b03ea968e',
+  NOTION_PAGE_ID: process.env.NOTION_PAGE_ID || '1c7c6303e6c980bbb8f1f53b03ea968e',
+  SITE_CACHE_TTL: process.env.SITE_CACHE_TTL || 3600,  // 缓存时间，单位(秒)
+  ENABLE_CACHE: process.env.ENABLE_CACHE || true, // 是否开启缓存
   THEME: process.env.NEXT_PUBLIC_THEME || 'heo', // 当前主题，在themes文件夹下可找到所有支持的主题；主题名称就是文件夹名，例如 example,fukasawa,gitbook,heo,hexo,landing,matery,medium,next,nobelium,plog,simple
   LANG: process.env.NEXT_PUBLIC_LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: process.env.NEXT_PUBLIC_SINCE || 2021, // e.g if leave this empty, current year will be used.
 
   PSEUDO_STATIC: process.env.NEXT_PUBLIC_PSEUDO_STATIC || false, // 伪静态路径，开启后所有文章URL都以 .html 结尾。
-  NEXT_REVALIDATE_SECOND: process.env.NEXT_PUBLIC_REVALIDATE_SECOND || 50, // 更新缓存间隔 单位(秒)；即每个页面有5秒的纯静态期、此期间无论多少次访问都不会抓取notion数据；调大该值有助于节省Vercel资源、同时提升访问速率，但也会使文章更新有延迟。
+  NEXT_REVALIDATE_SECOND: process.env.NEXT_PUBLIC_REVALIDATE_SECOND || 10, // 更新缓存间隔 单位(秒)；即每个页面有5秒的纯静态期、此期间无论多少次访问都不会抓取notion数据；调大该值有助于节省Vercel资源、同时提升访问速率，但也会使文章更新有延迟。
   APPEARANCE: process.env.NEXT_PUBLIC_APPEARANCE || 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
@@ -65,7 +65,21 @@ const BLOG = {
     'Hi，我是一个AI智能体, Hi，我是一个MCP螺丝钉,Hi，我是一个MCP布道者,欢迎走进MCP之路🎉',
 
   // uuid重定向至 slug
-  UUID_REDIRECT: process.env.UUID_REDIRECT || false
+  UUID_REDIRECT: process.env.UUID_REDIRECT || false,
+  POST_RANDOM_COVER: [
+    '/images/covers/mcp1.png',
+    '/images/covers/mcp2.png',
+    '/images/covers/mcp3.png',
+    '/images/covers/mcp4.png',
+    '/images/covers/mcp5.png',
+    '/images/covers/mcp6.png',
+    '/images/covers/mcp7.png',
+    '/images/covers/mcp8.png',
+    '/images/covers/mcp9.png',
+    '/images/covers/mcp10.png',
+    '/images/covers/mcp11.png',
+    '/images/covers/mcp12.png'
+  ]
 }
 
 module.exports = BLOG
