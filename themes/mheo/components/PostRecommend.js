@@ -25,7 +25,7 @@ export default function PostRecommend({ recommendPosts, siteInfo }) {
   const usedCovers = new Set()
 
   return (
-    <div className='pt-8 hidden md:block'>
+    <div> 
       {/* 推荐文章 */}
       <div className=' mb-2 px-1 flex flex-nowrap justify-between'>
         <div className='dark:text-gray-300 text-lg font-bold'>
@@ -36,7 +36,7 @@ export default function PostRecommend({ recommendPosts, siteInfo }) {
 
       {/* 文章列表 */}
 
-      <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
+      <div className='flex flex-col gap-4'> {/* MODIFIED: Changed from grid to flex flex-col */}
         {recommendPosts.map(post => {
           // const usedCovers = new Set() // <--- 从这里移除
 

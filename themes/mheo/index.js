@@ -44,6 +44,7 @@ import SideLeft from './components/SideLeft'
 import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
+import Card from './components/Card'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -68,7 +69,7 @@ const LayoutBase = props => {
 
       {/* Hero组件 - 在首页或分类页显示 */}
       {(router.route === '/' || router.route.startsWith('/category') || router.route.startsWith('/search') || router.route.startsWith('/tag')) && (
-        <div className="bg-slate-100 dark:bg-slate-800 py-8"> {/* 为Hero区域添加背景色和垂直内边距 */}
+        <div className="bg-blue-50 dark:bg-slate-700 py-8"> {/* 为Hero区域添加背景色和垂直内边距 */}
           <Hero {...props} />
         </div>
       )}
@@ -78,12 +79,11 @@ const LayoutBase = props => {
     </header>
   )
 
-  // 右侧栏 用户信息+标签列表
-  const isStartWithArticle = router.route.startsWith('/[prefix]');
-  const slotRight = !isStartWithArticle || fullWidth ? null : <SideLeft {...props} />
+  // 右侧栏 用户信息+标签列表 (实际是左侧栏TOC)
+  const isStartWithArticle = router.route.startsWith('/[prefix]')
+  const slotRight = !isStartWithArticle || fullWidth ? null : <SideLeft {...props} /> // This is the TOC for the left column
 
-  // const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
-  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-96rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
+  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[96rem] mx-auto'
 
   const HEO_HERO_BODY_REVERSE = siteConfig(
     'HEO_HERO_BODY_REVERSE',
@@ -100,7 +100,6 @@ const LayoutBase = props => {
   return (
     <div
       id='theme-mheo'
-      // className={`${siteConfig('FONT_STYLE')} bg-gray-50 dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
       className={`bg-gray-50 dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
       <Style />
 
@@ -108,25 +107,35 @@ const LayoutBase = props => {
       {headerSlot}
 
       {/* 主区块 */}
-      {/* <main
-        id='wrapper-outer'
-        className={`${router.route === '/' || router.route.indexOf('category') > -1 ? 'container' : ''} flex-grow ${maxWidth} relative ${router.route === '/' || router.route.indexOf('category') > -1 ? '' : 'max-w-7xl'} mx-auto`}> */}
       <main
         id='wrapper-outer'
-        className={`container flex-grow ${maxWidth} relative } mx-auto`}>
+        className={`flex-grow ${maxWidth} relative w-full`}>
         <div
           id='container-inner'
-          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} lg:flex justify-center relative mx-10 z-10 mt-4`}>
-          <div className='hidden xl:block'>
-            {slotRight}
-          </div>  
-          <div className='lg:px-2'></div>
-          <div className={`w-full h-auto ${className || ''}`}>
-            {/* 主区上部嵌入 */}
+          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} lg:flex relative w-full z-10 mt-4 justify-center mx-auto`}>
+          
+          {/* 左栏: TOC (SideLeft) */}
+          {slotRight && (
+            <div className='hidden xl:block w-72 flex-shrink-0 mr-4'>
+              {slotRight}
+            </div>
+          )}
+          
+          {/* 中栏: 主要内容 (LayoutSlug) */}
+          <div className={`flex-grow w-full lg:max-w-none ${className || ''}`}> {/* 确保中栏可以扩展 */}
             {slotTop}
-            {children}
+            {children} {/* children is LayoutSlug */}
           </div>
          
+          {/* 右栏: 推荐文章 (PostRecommend) */}
+          {isStartWithArticle && props.post?.type === 'Post' && !fullWidth && (
+            <div className='hidden lg:block w-72 flex-shrink-0 ml-4'>
+              {/* 使用Card组件包裹PostRecommend，并添加与目录相似的样式 */}
+              <Card className='bg-white dark:bg-[#1e1e1e] sticky top-20'>
+                <PostRecommend {...props} />
+              </Card>
+            </div>
+          )}
         </div>
       </main>
 
@@ -306,7 +315,7 @@ const LayoutSlug = props => {
   return (
     <>
       <div
-        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow rounded-lg lg:px-2 lg:py-4 shadow-sm `}>
+        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? '' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow rounded-lg lg:px-2 lg:py-4 shadow-sm `}>
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
@@ -336,8 +345,6 @@ const LayoutSlug = props => {
                 <div className='px-5'>
                   {/* 版权 */}
                   <PostCopyright {...props} />
-                  {/* 文章推荐 */}
-                  <PostRecommend {...props} />
                 </div>
               )}
             </article>

@@ -16,9 +16,9 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
   const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE')
   const colors = ["blue", "green", "red", "purple", "pink", "yellow", "orange"]
   return (
-    <div className='relative mb-6 max-w-7xl mx-auto'>
+    <div className='relative mb-6 max-w-[96rem] mx-auto'>
       {/* 面包屑导航 */}
-      <div className='text-sm text-gray-500 dark:text-gray-400 mx-10 my-4'>
+      <div className='text-sm text-gray-500 dark:text-gray-400 my-4'>
         <Link href="/" className='hover:text-blue-500 dark:hover:text-blue-400'>首页</Link>
         <span className='mx-2'>/</span>
         {post.category && (
@@ -35,7 +35,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
         <span className='text-gray-700 dark:text-gray-300'>{post.title}</span>
       </div>
 
-      <div className='flex flex-col items-start bg-white p-4 mx-10 rounded-lg shadow-sm'>
+      <div className='flex flex-col items-start bg-white py-4 px-6 rounded-lg shadow-sm'>
         {/* 标题 */}
         <div className='text-2xl font-bold text-gray-900 mb-1 flex dark:text-white'>
           {/* {siteConfig('POST_TITLE_ICON') && (

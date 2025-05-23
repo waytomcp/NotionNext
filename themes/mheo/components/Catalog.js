@@ -68,7 +68,7 @@ const Catalog = ({ toc }) => {
         {locale.COMMON.TABLE_OF_CONTENTS}
       </div>
       <div
-        className='overflow-y-auto max-h-36 lg:max-h-96 overscroll-none scroll-hidden'
+        className='overflow-y-auto max-h-192 lg:max-h-192 overscroll-none scroll-hidden'
         ref={tRef}>
         <nav className='h-full'>
           {toc?.map(tocItem => {

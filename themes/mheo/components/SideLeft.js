@@ -33,7 +33,7 @@ export default function SideLeft(props) {
   const sortedTags = tagOptions?.slice(0, 60) || []
 
   return (
-    <div id='sideLeft' className='hidden xl:block w-72 space-y-4 h-full'>
+    <div id='sideLeft' className='hidden xl:block w-68 space-y-4 h-full'>
       {/* <InfoCard {...props} className='w-72 wow fadeInUp' /> */}
 
       <div className='sticky top-20 space-y-4'>

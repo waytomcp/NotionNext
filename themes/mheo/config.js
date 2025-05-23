@@ -16,7 +16,7 @@ const CONFIG = {
   HEO_FULL_BANNER: [ // 全部展示Banner
     {
       title: "最全的MCP服务广场",
-      content: "聚合优质MCP资源,发现、分享、探索和应用AI的无限可能。",
+      content: "聚合优质MCP资源，发现、分享、探索和应用AI的无限可能。",
       bgColor: "blue",
       icons: [
         {
